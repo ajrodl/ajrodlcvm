@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV — A. Jonathan Rodríguez</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#EBF4FD; --ink:#042C53; --accent:#185FA5; --accent2:#378ADD;
+    --teal:#5DCAA5; --warm:#6B8CAE; --card:#F4F9FE; --border:#B5D4F4;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;cursor:none;}
+
+  /* CURSOR */
+  .cursor{width:12px;height:12px;border-radius:50%;background:var(--accent);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:multiply;}
+  .cursor-ring{width:36px;height:36px;border:1.5px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .15s ease;mix-blend-mode:multiply;}
+
+  /* LANG TOGGLE */
+  .lang-btn{
+    display:flex;align-items:center;gap:8px;
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;
+    background:transparent;border:1px solid var(--border);color:var(--ink);
+    padding:6px 14px;cursor:none;transition:all .2s;border-radius:2px;
+  }
+  .lang-btn:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);}
+  .lang-flag{font-size:1rem;line-height:1;}
+  .lang-active{color:var(--accent);font-weight:500;}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--border);padding:0 48px;position:sticky;top:0;z-index:100;background:rgba(235,244,253,0.93);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px;}
+  .store-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;letter-spacing:0.04em;color:var(--ink);white-space:nowrap;}
+  .store-name span{color:var(--accent);}
+  nav{display:flex;gap:28px;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;color:var(--warm);}
+  nav a{text-decoration:none;color:inherit;transition:color .2s;white-space:nowrap;}
+  nav a:hover{color:var(--accent);}
+  .header-right{display:flex;align-items:center;gap:12px;}
+  .cart-btn{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;background:var(--ink);color:var(--bg);padding:8px 18px;border-radius:2px;cursor:none;transition:background .2s;text-decoration:none;white-space:nowrap;}
+  .cart-btn:hover{background:var(--accent);}
+
+  /* TICKER */
+  .ticker-bar{background:var(--accent);color:var(--bg);padding:10px 0;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;overflow:hidden;}
+  .ticker-inner{display:inline-flex;gap:80px;animation:ticker 24s linear infinite;white-space:nowrap;}
+  @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;border-bottom:1px solid var(--border);opacity:0;animation:fadeUp .9s .1s forwards;}
+  .hero-text{padding:80px 60px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);}
+  .hero-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent2);background:#E6F1FB;padding:5px 12px;margin-bottom:36px;width:fit-content;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4.5vw,5rem);font-weight:900;line-height:0.95;letter-spacing:-0.02em;margin-bottom:32px;color:var(--ink);}
+  .hero-title .accent{color:var(--accent);font-style:italic;}
+  .hero-desc{font-size:1rem;line-height:1.75;color:var(--warm);max-width:440px;margin-bottom:48px;}
+  .hero-cta{display:flex;gap:16px;align-items:center;}
+  .btn-primary{background:var(--ink);color:var(--bg);padding:14px 32px;font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;border:none;cursor:none;transition:background .2s,transform .15s;text-decoration:none;display:inline-block;}
+  .btn-primary:hover{background:var(--accent);transform:translateY(-1px);}
+  .btn-secondary{font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:var(--warm);text-decoration:underline;text-underline-offset:4px;cursor:none;}
+  .hero-visual{background:var(--ink);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+  .hero-monogram{font-family:'Playfair Display',serif;font-size:20vw;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(55,138,221,0.1);position:absolute;user-select:none;line-height:1;}
+  .hero-card{background:var(--bg);width:270px;padding:32px;position:relative;z-index:2;border:1px solid var(--border);animation:float 4s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .hc-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm);margin-bottom:12px;}
+  .hc-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:8px;}
+  .hc-role{font-size:0.75rem;color:var(--accent);font-weight:500;letter-spacing:0.05em;margin-bottom:20px;}
+  .hc-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border);padding-top:20px;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink);}
+  .stat-lbl{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm);margin-top:2px;}
+
+  /* SECTIONS */
+  section{padding:80px 48px;}
+  .sec-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:48px;border-bottom:1px solid var(--border);padding-bottom:20px;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--ink);}
+  .sec-count{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--warm);}
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+  .sk-card{background:var(--card);padding:28px 24px;transition:background .2s;cursor:none;position:relative;overflow:hidden;}
+  .sk-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent2);transition:width .3s;}
+  .sk-card:hover::after{width:100%;}
+  .sk-card:hover{background:white;}
+  .sk-icon{font-size:1.6rem;margin-bottom:14px;display:block;}
+  .sk-cat{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm);margin-bottom:6px;}
+  .sk-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:10px;}
+  .sk-desc{font-size:0.78rem;line-height:1.6;color:var(--warm);}
+
+  /* ROLES */
+  .roles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+  .role-card{background:var(--card);padding:24px 20px;cursor:none;transition:background .2s;position:relative;overflow:hidden;}
+  .role-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--teal);transition:width .3s;}
+  .role-card:hover::after{width:100%;}
+  .role-card:hover{background:white;}
+  .role-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);margin-bottom:14px;}
+  .role-name{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--ink);}
+
+  /* TASKS BY ROLE */
+  .tasks-section{background:var(--ink);color:#EBF4FD;}
+  .tasks-section .sec-title{color:#EBF4FD;}
+  .tasks-section .sec-count{color:rgba(181,212,244,0.4);}
+  .tasks-section .sec-header{border-bottom-color:rgba(181,212,244,0.1);}
+  .tasks-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(181,212,244,0.1);border:1px solid rgba(181,212,244,0.1);}
+  .task-role-card{background:rgba(4,44,83,0.6);overflow:hidden;transition:background .2s;}
+  .task-role-card:hover{background:rgba(24,95,165,0.15);}
+  .task-role-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:28px 32px;cursor:none;
+    border-bottom:1px solid rgba(181,212,244,0.06);
+    user-select:none;
+  }
+  .task-role-left{display:flex;align-items:center;gap:16px;}
+  .task-role-icon{font-size:1.6rem;flex-shrink:0;}
+  .task-role-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#EBF4FD;line-height:1.2;}
+  .task-role-sub{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(181,212,244,0.4);margin-top:4px;}
+  .task-toggle{
+    width:32px;height:32px;border-radius:50%;
+    border:1px solid rgba(181,212,244,0.2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;color:rgba(181,212,244,0.5);
+    transition:all .3s;flex-shrink:0;
+  }
+  .task-role-card.open .task-toggle{background:var(--accent);border-color:var(--accent);color:#EBF4FD;transform:rotate(45deg);}
+  .task-body{
+    max-height:0;overflow:hidden;
+    transition:max-height .4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .task-role-card.open .task-body{max-height:900px;}
+  .task-list{padding:24px 32px 32px;display:flex;flex-direction:column;gap:0;}
+  .task-item{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:10px 0;border-bottom:1px solid rgba(181,212,244,0.06);
+  }
+  .task-item:last-child{border-bottom:none;}
+  .task-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:7px;}
+  .task-text{font-size:0.84rem;line-height:1.65;color:rgba(181,212,244,0.7);}
+
+  /* EXPERIENCE */
+  .exp-section{background:var(--ink);color:#EBF4FD;}
+  .exp-section .sec-title{color:#EBF4FD;}
+  .exp-section .sec-count{color:rgba(181,212,244,0.4);}
+  .exp-section .sec-header{border-bottom-color:rgba(181,212,244,0.1);}
+  .exp-list{display:flex;flex-direction:column;}
+  .exp-item{display:grid;grid-template-columns:160px 1fr auto;gap:36px;align-items:start;padding:32px 0;border-bottom:1px solid rgba(181,212,244,0.08);cursor:none;transition:padding-left .3s;}
+  .exp-item:hover{padding-left:14px;}
+  .exp-dates{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.12em;color:rgba(181,212,244,0.4);padding-top:4px;}
+  .exp-role{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:5px;color:#EBF4FD;}
+  .exp-company{font-size:0.8rem;color:var(--teal);font-weight:500;margin-bottom:10px;letter-spacing:0.05em;}
+  .exp-desc{font-size:0.84rem;line-height:1.75;color:rgba(181,212,244,0.55);max-width:560px;}
+  .exp-badge{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(181,212,244,0.15);padding:5px 12px;white-space:nowrap;color:rgba(181,212,244,0.4);}
+
+  /* PROJECTS */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+  .proj-card{background:var(--card);cursor:none;overflow:hidden;}
+  .proj-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;transition:transform .4s;}
+  .proj-card:hover .proj-thumb{transform:scale(1.05);}
+  .t1{background:linear-gradient(135deg,#042C53,#0C447C);}
+  .t2{background:linear-gradient(135deg,#0C3B1A,#1a6b36);}
+  .t3{background:linear-gradient(135deg,#1a0e2d,#3d1a6b);}
+  .t4{background:linear-gradient(135deg,#1a1208,#3d2b0e);}
+  .t5{background:linear-gradient(135deg,#1a1f2d,#2d3a5c);}
+  .t6{background:linear-gradient(135deg,#1a2d1a,#2d5c2d);}
+  .proj-info{padding:24px;}
+  .proj-tag{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .proj-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .proj-desc{font-size:0.8rem;line-height:1.7;color:var(--warm);margin-bottom:16px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .ptag{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--bg);padding:4px 10px;border:1px solid var(--border);color:var(--ink);}
+
+  /* SECTORS */
+  .sectors-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+  .sector-card{background:var(--card);padding:20px 16px;cursor:none;transition:background .2s;text-align:center;}
+  .sector-card:hover{background:white;}
+  .sector-icon{font-size:1.6rem;margin-bottom:8px;display:block;}
+  .sector-name{font-size:0.76rem;font-weight:500;color:var(--ink);line-height:1.3;}
+
+  /* CERTS */
+  .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+  .cert-card{background:var(--card);padding:32px 28px;cursor:none;transition:background .2s;}
+  .cert-card:hover{background:white;}
+  .cert-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
+  .cert-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3;}
+  .cert-issuer{font-size:0.78rem;color:var(--accent);font-weight:500;margin-bottom:4px;}
+  .cert-year{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;color:var(--warm);}
+
+  /* EDU */
+  .edu-card{background:var(--card);border:1px solid var(--border);padding:36px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;}
+  .edu-icon-big{font-size:3rem;}
+  .edu-degree{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:6px;}
+  .edu-school{font-size:0.88rem;color:var(--accent);font-weight:500;margin-bottom:4px;}
+  .edu-year{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;color:var(--warm);}
+
+  /* CONTACT */
+  .contact-section{border-top:1px solid var(--border);}
+  .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+  .big-text{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,3.5vw,3.8rem);font-weight:900;line-height:1;margin-bottom:24px;color:var(--ink);}
+  .big-text em{color:var(--accent);font-style:italic;}
+  .contact-p{font-size:0.92rem;line-height:1.75;color:var(--warm);margin-bottom:36px;}
+  .contact-links{display:flex;flex-direction:column;}
+  .contact-link{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border);cursor:none;transition:padding-left .25s;text-decoration:none;color:var(--ink);}
+  .contact-link:hover{padding-left:12px;}
+  .contact-link:hover .cl-arrow{color:var(--accent);}
+  .cl-label{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--warm);margin-bottom:3px;}
+  .cl-value{font-size:0.9rem;font-weight:500;}
+  .cl-arrow{font-size:1.1rem;color:var(--warm);transition:color .2s;}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:rgba(181,212,244,0.3);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;}
+  .footer-brand{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#EBF4FD;}
+
+  /* LANG TRANSITION */
+  [data-es],[data-en]{transition:opacity .25s;}
+  .lang-fade{opacity:0;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{opacity:0;animation:fadeUp .7s forwards;}
+  .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;min-height:auto;}
+    .hero-visual{display:none;}
+    .exp-item{grid-template-columns:1fr;gap:10px;}
+    .proj-grid,.roles-grid,.sectors-grid{grid-template-columns:1fr 1fr;}
+    .cert-grid{grid-template-columns:1fr;}
+    .contact-inner{grid-template-columns:1fr;gap:40px;}
+    header{padding:0 20px;}
+    section{padding:52px 20px;}
+    nav{display:none;}
+    footer{flex-direction:column;gap:10px;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="store-name">Armando Jonathan Rodríguez Lagunas</div>
+  <nav>
+    <a href="#habilidades"><span data-es>Habilidades</span><span data-en style="display:none">Skills</span></a>
+    <a href="#tareas"><span data-es>Tareas</span><span data-en style="display:none">Tasks</span></a>
+    <a href="#experiencia"><span data-es>Experiencia</span><span data-en style="display:none">Experience</span></a>
+    <a href="#proyectos"><span data-es>Proyectos</span><span data-en style="display:none">Projects</span></a>
+    <a href="#certificaciones"><span data-es>Certificaciones</span><span data-en style="display:none">Certifications</span></a>
+  </nav>
+  <div class="header-right">
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()">
+      <span class="lang-flag" id="langFlag">ES</span>
+      <span id="langLabel">EN</span>
+    </button>
+    <a href="#contacto" class="cart-btn">
+      <span data-es>Contactar →</span><span data-en style="display:none">Contact me →</span>
+    </a>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner" id="tickerInner">
+    <span data-es>✦ Disponible para nuevas oportunidades</span><span data-en style="display:none">✦ Open to new opportunities</span>
+    <span data-es>✦ 12+ años de experiencia</span><span data-en style="display:none">✦ 12+ years of experience</span>
+    <span data-es>✦ eCommerce & Custom Software Expert</span><span data-en style="display:none">✦ eCommerce & Custom Software Expert</span>
+    <span data-es>✦ SAP Commerce Cloud Certificado</span><span data-en style="display:none">✦ SAP Commerce Cloud Certified</span>
+    <span data-es>✦ Sevilla, España · Remoto · Híbrido · Reubicación</span><span data-en style="display:none">✦ Seville, Spain · Remote · Hybrid · Relocation</span>
+    <span data-es>✦ Disponible para nuevas oportunidades</span><span data-en style="display:none">✦ Open to new opportunities</span>
+    <span data-es>✦ 12+ años de experiencia</span><span data-en style="display:none">✦ 12+ years of experience</span>
+    <span data-es>✦ eCommerce & Custom Software Expert</span><span data-en style="display:none">✦ eCommerce & Custom Software Expert</span>
+    <span data-es>✦ SAP Commerce Cloud Certificado</span><span data-en style="display:none">✦ SAP Commerce Cloud Certified</span>
+    <span data-es>✦ Sevilla, España · Remoto · Híbrido · Reubicación</span><span data-en style="display:none">✦ Seville, Spain · Remote · Hybrid · Relocation</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-badge"><span data-es>12+ años · eCommerce Expert</span><span data-en style="display:none">12+ years · eCommerce Expert</span></div>
+    <h1 class="hero-title">
+      <span data-es>Experto en<br><span class="accent">Comercio Electrónico</span>&nbsp e Ingeniería de Software</span>
+      <span data-en style="display:none"><span class="accent">eCommerce</span><br>& Software Engineering Expert</span>
+    </h1>
+    <p class="hero-desc">
+      <span data-es>Más de 12 años liderando e implementando proyectos tecnológicos complejos en múltiples industrias y países. Especializado en SAP Commerce Cloud, arquitecturas headless y soluciones a medida para clientes enterprise a nivel global.</span>
+      <span data-en style="display:none">Over 12 years leading and implementing complex technology projects across multiple industries and countries. Specialized in SAP Commerce Cloud, headless architectures, and custom solutions for enterprise clients globally.</span>
+    </p>
+    <div class="hero-cta">
+      <a href="#contacto" class="btn-primary"><span data-es>Contratar ahora</span><span data-en style="display:none">Hire me now</span></a>
+      <a href="#proyectos" class="btn-secondary"><span data-es>Ver proyectos</span><span data-en style="display:none">View projects</span></a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-monogram">JR</div>
+    <div class="hero-card">
+      <div class="hc-label"><span data-es>Perfil Profesional</span><span data-en style="display:none">Professional Profile</span></div>
+      <div class="hc-name">A. Jonathan<br>Rodríguez</div>
+      <div class="hc-role">eCommerce & Custom Software Eng. Expert</div>
+      <div class="hc-stats">
+        <div><div class="stat-num">12+</div><div class="stat-lbl"><span data-es>Años exp.</span><span data-en style="display:none">Yrs exp.</span></div></div>
+        <div><div class="stat-num">10+</div><div class="stat-lbl"><span data-es>En eCommerce</span><span data-en style="display:none">In eCommerce</span></div></div>
+        <div><div class="stat-num">20+</div><div class="stat-lbl"><span data-es>Clientes</span><span data-en style="display:none">Clients</span></div></div>
+        <div><div class="stat-num">4</div><div class="stat-lbl"><span data-es>Continentes</span><span data-en style="display:none">Continents</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HABILIDADES -->
+<section id="habilidades" class="fade-up d1">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Habilidades Técnicas</span><span data-en style="display:none">Technical Skills</span></h2>
+    <span class="sec-count"><span data-es>4 categorías</span><span data-en style="display:none">4 categories</span></span>
+  </div>
+  <div class="skills-grid">
+    <div class="sk-card">
+      <span class="sk-icon">🛒</span>
+      <div class="sk-cat"><span data-es>Plataformas eCommerce</span><span data-en style="display:none">eCommerce Platforms</span></div>
+      <div class="sk-name"><span data-es>SAP Commerce Cloud & más</span><span data-en style="display:none">SAP Commerce Cloud & more</span></div>
+      <div class="sk-desc">SAP Commerce Cloud (Hybris) · VTEX · Adobe Commerce (Magento) · PrestaShop · Odoo...</div>
+    </div>
+    <div class="sk-card">
+      <span class="sk-icon">🏗️</span>
+      <div class="sk-cat"><span data-es>Arquitecturas</span><span data-en style="display:none">Architectures</span></div>
+      <div class="sk-name"><span data-es>Headless · Cloud · Microservicios</span><span data-en style="display:none">Headless · Cloud · Microservices</span></div>
+      <div class="sk-desc"><span data-es>On Premise/Cloud - Monolítica · Headless · Composable · Microservicios · SaaS · PWA</span><span data-en style="display:none">On Premise · Cloud · Monolithic · Headless · Composable · Microservices · SaaS · PWA</span></div>
+    </div>
+    <div class="sk-card">
+      <span class="sk-icon">⚙️</span>
+      <div class="sk-cat"><span data-es>Metodologías</span><span data-en style="display:none">Methodologies</span></div>
+      <div class="sk-name">Agile · Scrum · SAP Activate</div>
+      <div class="sk-desc"><span data-es>Scrum / Agile · Waterfall · SAP Activate · Design Thinking · Gamification</span><span data-en style="display:none">Scrum / Agile · Waterfall · SAP Activate · Design Thinking · Gamification</span></div>
+    </div>
+    <div class="sk-card">
+      <span class="sk-icon">📊</span>
+      <div class="sk-cat"><span data-es>Gestión & Consultoría</span><span data-en style="display:none">Management & Consulting</span></div>
+      <div class="sk-name"><span data-es>PM · Análisis Funcional · UX</span><span data-en style="display:none">PM · Functional Analysis · UX</span></div>
+      <div class="sk-desc"><span data-es>Gestión de proyectos · Análisis funcional · Arquitectura de Solución · UX Research · CRO</span><span data-en style="display:none">Project management · Functional analysis · Solution Architecture · UX Research · CRO</span></div>
+    </div>
+	<div class="sk-card">
+      <span class="sk-icon">🔄</span>
+      <div class="sk-cat"><span data-es>Migración & Actualización</span><span data-en style="display:none">Migration & Upgrades</span></div>
+      <div class="sk-name"><span data-es>Migración de Plataformas</span><span data-en style="display:none">Platform Migration</span></div>
+      <div class="sk-desc"><span data-es>On Premise a Cloud · Actualización de versiones · Modernización de plataformas · Cambio de tecnología de plataformas</span><span data-en style="display:none">On Premise to Cloud · Version upgrades · Platform Revamp · Platform technology switching</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="fade-up d1" style="padding-top:0;">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Roles & Competencias</span><span data-en style="display:none">Roles & Competencies</span></h2>
+    <span class="sec-count"><span data-es>8 perfiles</span><span data-en style="display:none">8 profiles</span></span>
+  </div>
+  <div class="roles-grid">
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">eCommerce Frameworks Expert</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">Solution Architect</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">Delivery Lead / Manager</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">Product Owner</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">Sr. Functional Consultant</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">Sr. Business Analyst</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">Scrum Master</div></div>
+    <div class="role-card"><div class="role-dot"></div><div class="role-name">UX Designer</div></div>
+  </div>
+</section>
+
+<!-- TAREAS POR ROL -->
+<section id="tareas" class="tasks-section fade-up d2">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Tareas por Rol</span><span data-en style="display:none">Tasks by Role</span></h2>
+    <span class="sec-count"><span data-es>5 roles · haz clic para expandir</span><span data-en style="display:none">5 roles · click to expand</span></span>
+  </div>
+  <div class="tasks-grid">
+
+    <!-- SAP Commerce SME -->
+    <div class="task-role-card" onclick="toggleTask(this)">
+      <div class="task-role-header">
+        <div class="task-role-left">
+          <span class="task-role-icon">🛒</span>
+          <div>
+            <div class="task-role-title">SAP Commerce SME</div>
+            <div class="task-role-sub"><span data-es>Subject Matter Expert</span><span data-en style="display:none">Subject Matter Expert</span></div>
+          </div>
+        </div>
+        <div class="task-toggle">+</div>
+      </div>
+      <div class="task-body">
+        <div class="task-list">
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Ejecución de workshops para presentación de funcionalidades estándar de la herramienta.</span><span data-en style="display:none">Conducting workshops to present standard tool functionalities.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Ejecución de workshops para levantamiento de requerimientos.</span><span data-en style="display:none">Running requirements gathering workshops.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definición de arquitectura funcional.</span><span data-en style="display:none">Functional architecture definition.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Validación de decisiones técnicas alineadas con mejores prácticas del producto.</span><span data-en style="display:none">Validating technical decisions aligned with product best practices.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Revisión de diseños de solución.</span><span data-en style="display:none">Solution design review.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Evaluación de impactos en performance, escalabilidad y mantenibilidad.</span><span data-en style="display:none">Assessing impacts on performance, scalability, and maintainability.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definición de lineamientos de desarrollo y customización.</span><span data-en style="display:none">Defining development and customization guidelines.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Modelado de catálogo complejo y estructuras multi-categoría.</span><span data-en style="display:none">Complex catalog modeling and multi-category structures.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Estrategias de pricing y promociones avanzadas.</span><span data-en style="display:none">Advanced pricing and promotions strategies.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Flujos B2B.</span><span data-en style="display:none">B2B workflows.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>CMS y personalización de experiencia.</span><span data-en style="display:none">CMS and experience personalization.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Estrategias omnicanal.</span><span data-en style="display:none">Omnichannel strategies.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Implementaciones headless y arquitecturas composables.</span><span data-en style="display:none">Headless implementations and composable architectures.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Asesoría a clientes y equipos internos en definición de roadmap digital.</span><span data-en style="display:none">Advising clients and internal teams on digital roadmap definition.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Evaluación de viabilidad de nuevas funcionalidades versus capacidades estándar.</span><span data-en style="display:none">Feasibility assessment of new features vs. standard capabilities.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Análisis de impacto de nuevas versiones y roadmap oficial del producto.</span><span data-en style="display:none">Impact analysis of new product versions and official roadmap.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Estimaciones de alto nivel y definición de alcance.</span><span data-en style="display:none">High-level estimations and scope definition.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Revisión y propuestas de experiencia de usuario.</span><span data-en style="display:none">User experience reviews and proposals.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definición del Customer Journey.</span><span data-en style="display:none">Customer Journey definition.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analista de Negocio Senior -->
+    <div class="task-role-card" onclick="toggleTask(this)">
+      <div class="task-role-header">
+        <div class="task-role-left">
+          <span class="task-role-icon">📋</span>
+          <div>
+            <div class="task-role-title"><span data-es>Analista de Negocio Senior</span><span data-en style="display:none">Senior Business Analyst</span></div>
+            <div class="task-role-sub">Sr. Business Analyst</div>
+          </div>
+        </div>
+        <div class="task-toggle">+</div>
+      </div>
+      <div class="task-body">
+        <div class="task-list">
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Asistir y trabajar de la mano de los Product Owners para entender el negocio, identificar necesidades funcionales y técnicas.</span><span data-en style="display:none">Assist and work alongside Product Owners to understand the business and identify functional and technical needs.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Traducir necesidades en requerimientos para desarrollo.</span><span data-en style="display:none">Translate business needs into development requirements.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Registrar requerimientos de negocio en historias de usuario claras y accionables.</span><span data-en style="display:none">Document business requirements as clear, actionable user stories.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definir criterios de aceptación alineados con las capacidades nativas de SAP Commerce.</span><span data-en style="display:none">Define acceptance criteria aligned with native SAP Commerce capabilities.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Detectar oportunidades de mejora basadas en mejores prácticas del producto.</span><span data-en style="display:none">Identify improvement opportunities based on product best practices.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Modelado de procesos AS-IS y TO-BE.</span><span data-en style="display:none">AS-IS and TO-BE process modeling.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Diseño funcional de integraciones con ERP (SAP ECC / S4), OMS, CRM y pasarelas de pago.</span><span data-en style="display:none">Functional design of integrations with ERP (SAP ECC / S4), OMS, CRM, and payment gateways.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definición de soluciones headless (Spartacus / Composable Storefront).</span><span data-en style="display:none">Definition of headless solutions (Spartacus / Composable Storefront).</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultor Funcional Senior -->
+    <div class="task-role-card" onclick="toggleTask(this)">
+      <div class="task-role-header">
+        <div class="task-role-left">
+          <span class="task-role-icon">⚙️</span>
+          <div>
+            <div class="task-role-title"><span data-es>Consultor Funcional Senior</span><span data-en style="display:none">Senior Functional Consultant</span></div>
+            <div class="task-role-sub">Sr. Functional Consultant</div>
+          </div>
+        </div>
+        <div class="task-toggle">+</div>
+      </div>
+      <div class="task-body">
+        <div class="task-list">
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Analizar requerimientos y validar su alineación con capacidades estándar.</span><span data-en style="display:none">Analyze requirements and validate alignment with standard capabilities.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Diseñar soluciones funcionales basadas en el estándar.</span><span data-en style="display:none">Design functional solutions based on standard capabilities.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definir configuraciones de catálogo, estructura de productos, clasificación y variantes.</span><span data-en style="display:none">Define catalog configurations, product structures, classification, and variants.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Diseñar reglas de promociones, pricing y descuentos complejos.</span><span data-en style="display:none">Design promotion rules, pricing, and complex discount structures.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Modelar procesos de checkout, gestión de pedidos y devoluciones.</span><span data-en style="display:none">Model checkout processes, order management, and returns workflows.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definir workflows B2B (aprobaciones, unidades organizativas, límites de crédito).</span><span data-en style="display:none">Define B2B workflows (approvals, organizational units, credit limits).</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Configuración de CMS (componentes, páginas, slots, restricciones).</span><span data-en style="display:none">CMS configuration (components, pages, slots, restrictions).</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Parametrización de catálogos y sincronizaciones.</span><span data-en style="display:none">Catalog parameterization and synchronizations.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Configuración de promociones y reglas de negocio.</span><span data-en style="display:none">Promotion and business rule configuration.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definición de roles y permisos.</span><span data-en style="display:none">Roles and permissions definition.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Setup de base stores, idiomas, monedas y mercados.</span><span data-en style="display:none">Base store setup, languages, currencies, and markets.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Líder de Entrega -->
+    <div class="task-role-card" onclick="toggleTask(this)">
+      <div class="task-role-header">
+        <div class="task-role-left">
+          <span class="task-role-icon">🚀</span>
+          <div>
+            <div class="task-role-title"><span data-es>Líder de Entrega</span><span data-en style="display:none">Delivery Lead</span></div>
+            <div class="task-role-sub">Delivery Lead / Manager</div>
+          </div>
+        </div>
+        <div class="task-toggle">+</div>
+      </div>
+      <div class="task-body">
+        <div class="task-list">
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Planificación y seguimiento del roadmap del proyecto.</span><span data-en style="display:none">Project roadmap planning and tracking.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definición de estrategia de delivery (metodología).</span><span data-en style="display:none">Delivery strategy definition (methodology).</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Gestión de alcance, riesgos y dependencias.</span><span data-en style="display:none">Scope, risk, and dependency management.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Control de recursos.</span><span data-en style="display:none">Resource management and control.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Coordinación de múltiples streams (front-end, back-end, integraciones, QA, DevOps).</span><span data-en style="display:none">Coordination of multiple streams (front-end, back-end, integrations, QA, DevOps).</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Planificación de cutover.</span><span data-en style="display:none">Cutover planning.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Coordinación de ventanas de despliegue.</span><span data-en style="display:none">Deployment window coordination.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Gestión de hypercare.</span><span data-en style="display:none">Hypercare management.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Seguimiento de incidencias críticas.</span><span data-en style="display:none">Critical incident tracking.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Estabilización post go-live.</span><span data-en style="display:none">Post go-live stabilization.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Owner -->
+    <div class="task-role-card" onclick="toggleTask(this)" style="grid-column:1/-1;">
+      <div class="task-role-header">
+        <div class="task-role-left">
+          <span class="task-role-icon">🎯</span>
+          <div>
+            <div class="task-role-title">Product Owner</div>
+            <div class="task-role-sub">Product Owner</div>
+          </div>
+        </div>
+        <div class="task-toggle">+</div>
+      </div>
+      <div class="task-body">
+        <div class="task-list" style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px;">
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Liderar implementaciones end-to-end alineando tecnología con el objetivo de negocio.</span><span data-en style="display:none">Lead end-to-end implementations aligning technology with business objectives.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Definir y priorizar el roadmap del producto con enfoque en crecimiento y escalabilidad.</span><span data-en style="display:none">Define and prioritize the product roadmap focused on growth and scalability.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Gestión de backlog y redacción de historias de usuario.</span><span data-en style="display:none">Backlog management and user story writing.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Coordinar equipos multidisciplinarios bajo diferentes metodologías.</span><span data-en style="display:none">Coordinate multidisciplinary teams under different methodologies.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Liderar integraciones entre diferentes sistemas.</span><span data-en style="display:none">Lead integrations between different systems.</span></div></div>
+          <div class="task-item"><div class="task-dot"></div><div class="task-text"><span data-es>Gestionar releases y despliegues asegurando estabilidad en producción.</span><span data-en style="display:none">Manage releases and deployments ensuring production stability.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia" class="exp-section fade-up d2">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Experiencia Laboral</span><span data-en style="display:none">Work Experience</span></h2>
+    <span class="sec-count"><span data-es>5 posiciones · 15 años</span><span data-en style="display:none">5 positions · 15 years</span></span>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-dates">2022 — 2025</div>
+      <div>
+        <div class="exp-role">Associate Manager — Custom Software Engineering</div>
+        <div class="exp-company">Accenture Iberia</div>
+        <div class="exp-desc">
+          <span data-es>Liderazgo de proyectos eCommerce headless (Spartacus / Composable Storefront) para clientes enterprise (EMEA). Responsable de gestión de proyectos, definición de arquitectura, análisis de requerimientos, diseño de soluciones, coordinación de implementación, pruebas end-to-end y soporte post-productivo.</span>
+          <span data-en style="display:none">Led headless eCommerce projects (Spartacus / Composable Storefront) for enterprise clients across EMEA. Responsible for project management, architecture definition, requirements analysis, solution design, implementation coordination, end-to-end testing, and post-go-live support.</span>
+        </div>
+      </div>
+      <div class="exp-badge">Full-time</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dates">2019 — 2022</div>
+      <div>
+        <div class="exp-role">SAP Commerce Cloud SME</div>
+        <div class="exp-company">EPAM / NEORIS</div>
+        <div class="exp-desc">
+          <span data-es>Experto a cargo de múltiples implementaciones SAP Commerce. Responsable de la definición arquitectónica funcional, supervisión de desarrollo, configuraciones backoffice y asesoría en roadmap digital.</span>
+          <span data-en style="display:none">Subject matter expert overseeing multiple SAP Commerce implementations. Responsible for functional architecture definition, development oversight, backoffice configurations, and digital roadmap advisory.</span>
+        </div>
+      </div>
+      <div class="exp-badge">Full-time</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dates">2018 — 2019</div>
+      <div>
+        <div class="exp-role">Solution Architect</div>
+        <div class="exp-company">Florida Ice & Farm Company</div>
+        <div class="exp-desc">
+          <span data-es>Arquitecto de Soluciones supervisando la implementación de la plataforma eCommerce B2B, definición de integraciones con sistemas de terceros (ERP, OMS, CRM) y supervisión del equipo técnico.</span>
+          <span data-en style="display:none">Solutions Architect overseeing the B2B eCommerce platform implementation, defining integrations with third-party systems (ERP, OMS, CRM), and supervising the technical team.</span>
+        </div>
+      </div>
+      <div class="exp-badge">Full-time</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dates">2017 — 2018</div>
+      <div>
+        <div class="exp-role">SAP Commerce Functional Lead</div>
+        <div class="exp-company">EPAM / NEORIS</div>
+        <div class="exp-desc">
+          <span data-es>Líder funcional en implementaciones multi-site sobre SAP Commerce. Definición funcional de solución para todas las implementaciones, así como configuraciones de la herramienta.</span>
+          <span data-en style="display:none">Functional lead on multi-site SAP Commerce implementations. Defined functional solutions across all implementations and handled platform configurations.</span>
+        </div>
+      </div>
+      <div class="exp-badge">Full-time</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dates">2010 — 2017</div>
+      <div>
+        <div class="exp-role">Business Analyst / eCommerce Consultant</div>
+        <div class="exp-company">Accenture México</div>
+        <div class="exp-desc">
+          <span data-es>Analista de negocio y consultor eCommerce en implementaciones de software a medida en diversas tecnologías y plataformas de comercio electrónico para clientes de gran escala.</span>
+          <span data-en style="display:none">Business analyst and eCommerce consultant on custom software implementations across various technologies and e-commerce platforms for large-scale clients.</span>
+        </div>
+      </div>
+      <div class="exp-badge">Full-time</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos" class="fade-up d2">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Clientes Relevantes</span><span data-en style="display:none">Key Clients</span></h2>
+    <span class="sec-count"><span data-es>20+ clientes · 4 regiones</span><span data-en style="display:none">20+ clients · 4 regions</span></span>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-thumb t1">✈️</div>
+      <div class="proj-info">
+        <div class="proj-tag">EMEA · <span data-es>Aeroespacial</span><span data-en style="display:none">Aerospace</span></div>
+        <div class="proj-title">Airbus</div>
+        <div class="proj-desc"><span data-es>Implementación eCommerce enterprise para uno de los mayores fabricantes aeroespaciales del mundo. España / Alemania.</span><span data-en style="display:none">Enterprise eCommerce implementation for one of the world's largest aerospace manufacturers. Spain / Germany.</span></div>
+        <div class="proj-tags"><span class="ptag">SAP Commerce</span><span class="ptag">Headless</span><span class="ptag">B2B</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t2">💊</div>
+      <div class="proj-info">
+        <div class="proj-tag">EMEA · <span data-es>Farmacéutica</span><span data-en style="display:none">Pharma</span></div>
+        <div class="proj-title">Novartis</div>
+        <div class="proj-desc"><span data-es>Solución de comercio electrónico para cliente farmacéutico global. Bélgica.</span><span data-en style="display:none">eCommerce solution for a global pharmaceutical client. Belgium.</span></div>
+        <div class="proj-tags"><span class="ptag">SAP Commerce</span><span class="ptag">Composable</span><span class="ptag">EMEA</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t3">👗</div>
+      <div class="proj-info">
+        <div class="proj-tag">EMEA · <span data-es>Moda & Lujo</span><span data-en style="display:none">Fashion & Luxury</span></div>
+        <div class="proj-title">Carolina Herrera</div>
+        <div class="proj-desc"><span data-es>Plataforma eCommerce global para marca de moda y lujo premium. España / Global.</span><span data-en style="display:none">Global eCommerce platform for a premium luxury fashion brand. Spain / Global.</span></div>
+        <div class="proj-tags"><span class="ptag">Spartacus</span><span class="ptag">PWA</span><span class="ptag">Global</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t4">🏗️</div>
+      <div class="proj-info">
+        <div class="proj-tag"><span data-es>América · Construcción</span><span data-en style="display:none">Americas · Construction</span></div>
+        <div class="proj-title">CEMEX (4 <span data-es>plataformas</span><span data-en style="display:none">platforms</span>)</div>
+        <div class="proj-desc"><span data-es>Construrama MX · Construagil MX · Ready Mix To Go UK · Kennedy Concrete EUA. Implementaciones multi-país.</span><span data-en style="display:none">Construrama MX · Construagil MX · Ready Mix To Go UK · Kennedy Concrete USA. Multi-country implementations.</span></div>
+        <div class="proj-tags"><span class="ptag">Multi-site</span><span class="ptag">B2B</span><span class="ptag"><span data-es>Multi-país</span><span data-en style="display:none">Multi-country</span></span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t5">📦</div>
+      <div class="proj-info">
+        <div class="proj-tag"><span data-es>América · Retail</span><span data-en style="display:none">Americas · Retail</span></div>
+        <div class="proj-title">Office Depot México</div>
+        <div class="proj-desc"><span data-es>Plataforma de eCommerce B2C para cadena retail de oficinas con presencia nacional.</span><span data-en style="display:none">B2C eCommerce platform for a national office retail chain.</span></div>
+        <div class="proj-tags"><span class="ptag">eCommerce</span><span class="ptag">B2C</span><span class="ptag">Retail</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t6">📡</div>
+      <div class="proj-info">
+        <div class="proj-tag"><span data-es>América · Telecomunicaciones</span><span data-en style="display:none">Americas · Telecom</span></div>
+        <div class="proj-title">América Móvil</div>
+        <div class="proj-desc"><span data-es>Consultoría eCommerce para uno de los mayores operadores de telecomunicaciones de Latinoamérica.</span><span data-en style="display:none">eCommerce consulting for one of Latin America's largest telecom operators.</span></div>
+        <div class="proj-tags"><span class="ptag">Telco</span><span class="ptag">Custom Software</span><span class="ptag">LATAM</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORES -->
+<section class="fade-up d2" style="padding-top:0;">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Sectores de Experiencia</span><span data-en style="display:none">Industry Experience</span></h2>
+    <span class="sec-count"><span data-es>10 industrias</span><span data-en style="display:none">10 industries</span></span>
+  </div>
+  <div class="sectors-grid">
+    <div class="sector-card"><span class="sector-icon">🛍️</span><div class="sector-name"><span data-es>Minorista / Retail</span><span data-en style="display:none">Retail</span></div></div>
+    <div class="sector-card"><span class="sector-icon">💄</span><div class="sector-name"><span data-es>Belleza y Moda</span><span data-en style="display:none">Beauty & Fashion</span></div></div>
+    <div class="sector-card"><span class="sector-icon">🍺</span><div class="sector-name"><span data-es>Bebidas y Alimentos</span><span data-en style="display:none">Food & Beverage</span></div></div>
+    <div class="sector-card"><span class="sector-icon">📡</span><div class="sector-name"><span data-es>Telecomunicaciones</span><span data-en style="display:none">Telecommunications</span></div></div>
+    <div class="sector-card"><span class="sector-icon">💊</span><div class="sector-name"><span data-es>Farmacéutica</span><span data-en style="display:none">Pharmaceuticals</span></div></div>
+    <div class="sector-card"><span class="sector-icon">🛢️</span><div class="sector-name"><span data-es>Petroquímica y Gas</span><span data-en style="display:none">Petrochemicals & Gas</span></div></div>
+    <div class="sector-card"><span class="sector-icon">⛏️</span><div class="sector-name"><span data-es>Minería y Metalurgia</span><span data-en style="display:none">Mining & Metallurgy</span></div></div>
+    <div class="sector-card"><span class="sector-icon">🏗️</span><div class="sector-name"><span data-es>Construcción</span><span data-en style="display:none">Construction</span></div></div>
+    <div class="sector-card"><span class="sector-icon">🏦</span><div class="sector-name"><span data-es>Banca y Gobierno</span><span data-en style="display:none">Banking & Government</span></div></div>
+    <div class="sector-card"><span class="sector-icon">✈️</span><div class="sector-name"><span data-es>Aeroespacial y Defensa</span><span data-en style="display:none">Aerospace & Defense</span></div></div>
+  </div>
+</section>
+
+<!-- CERTIFICACIONES -->
+<section id="certificaciones" class="fade-up d3">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Certificaciones</span><span data-en style="display:none">Certifications</span></h2>
+    <span class="sec-count"><span data-es>4 certificados vigentes</span><span data-en style="display:none">4 active certifications</span></span>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <span class="cert-icon">🏅</span>
+      <div class="cert-name">SAP Certified Associate — Business User</div>
+      <div class="cert-issuer">SAP</div>
+      <div class="cert-year">2026</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">⚙️</span>
+      <div class="cert-name">SAP Certified Professional — Developer — SAP Commerce Cloud</div>
+      <div class="cert-issuer">SAP</div>
+      <div class="cert-year">2026</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🔄</span>
+      <div class="cert-name">Scrum Foundation Professional Certification — SFPC</div>
+      <div class="cert-issuer">CertiProf</div>
+      <div class="cert-year">2025</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🤖</span>
+      <div class="cert-name">Generative AI Leader</div>
+      <div class="cert-issuer">Google</div>
+      <div class="cert-year">2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCACIÓN -->
+<section class="fade-up d3" style="padding-top:0;">
+  <div class="sec-header">
+    <h2 class="sec-title"><span data-es>Educación</span><span data-en style="display:none">Education</span></h2>
+    <span class="sec-count"><span data-es>Formación universitaria</span><span data-en style="display:none">University degree</span></span>
+  </div>
+  <div class="edu-card">
+    <div class="edu-icon-big">🎓</div>
+    <div>
+      <div class="edu-degree"><span data-es>Ingeniería Electrónica</span><span data-en style="display:none">Electronic Engineering</span></div>
+      <div class="edu-school">Universidad Autónoma Metropolitana (UAM), México</div>
+      <div class="edu-year">2004 — 2007</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contact-section fade-up d3">
+  <div class="contact-inner">
+    <div>
+      <div class="big-text">
+        <span data-es>Listo para<br><em>colaborar</em></span>
+        <span data-en style="display:none">Ready to<br><em>collaborate</em></span>
+      </div>
+      <p class="contact-p">
+        <span data-es>Disponible para posiciones remotas, híbridas o con reubicación. Especialista en proyectos eCommerce enterprise y soluciones de software a medida a nivel global.</span>
+        <span data-en style="display:none">Available for remote, hybrid, or relocation positions. Specialist in enterprise eCommerce projects and custom software solutions at a global level.</span>
+      </p>
+      <a class="btn-primary" style="text-decoration:none;">
+        <span data-es>Enviar mensaje →</span><span data-en style="display:none">Send message →</span>
+      </a>
+    </div>
+     
+    <div class="contact-links">
+      <a href="mailto:johnn.rod.l@gmail.com" class="contact-link">
+        <div><div class="cl-label">Email</div><div class="cl-value">johnn.rod.l@gmail.com</div></div>
+		<span class="cl-arrow">→</span>
+      </a>
+      <a href="https://wa.me/+525576645234" class="contact-link">
+        <div><div class="cl-label"><span data-es>Teléfono / WA</span><span data-en style="display:none">Phone / WA</span></div><div class="cl-value">+52 7664 5234 / +34 680 790 117</div></div>
+        <span class="cl-arrow">→</span>
+      </a>
+      <div class="contact-link">
+        <div><div class="cl-label"><span data-es>Ubicación</span><span data-en style="display:none">Location</span></div><div class="cl-value"><span data-es>Nuevo León, México / Sevilla, España</span><span data-en style="display:none">Nuevo León, México / Seville, Spain</span></div></div>
+        
+      </div>
+      <div class="contact-link">
+        <div><div class="cl-label"><span data-es>Modalidad</span><span data-en style="display:none">Work mode</span></div><div class="cl-value"><span data-es>Remoto · Híbrido · Reubicación</span><span data-en style="display:none">Remote · Hybrid · Relocation</span></div></div>
+        
+      </div>
+      <div class="contact-link">
+        <div><div class="cl-label"><span data-es>Idiomas</span><span data-en style="display:none">Languages</span></div><div class="cl-value"><span data-es>Español (Nativo) · Inglés (B2)</span><span data-en style="display:none">Spanish (Native) · English (B2)</span></div></div>
+        
+      </div>
+	   <a href="https://www.linkedin.com/in/jonathan-rodr%C3%ADguez-ecommerce/" class="contact-link">
+        <div><div class="cl-label"><span data-es>LinkedIn</span><span data-en style="display:none">LinkedIn</span></div><div class="cl-value">www.linkedin.com/in/jonathan-rodríguez-ecommerce</div></div>
+		<span class="cl-arrow">→</span>
+        
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 A. Jonathan Rodríguez — eCommerce & Custom Software Eng. Expert</span>
+  <span data-es>Sevilla, España</span><span data-en style="display:none">Seville, Spain</span>
+</footer>
+
+<script>
+  /* ---- CURSOR ---- */
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function animC(){
+    cursor.style.left=mx+'px';cursor.style.top=my+'px';
+    rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(animC);
+  })();
+  document.querySelectorAll('a,button,.sk-card,.proj-card,.cert-card,.role-card,.sector-card,.exp-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='6px';cursor.style.height='6px';ring.style.width='52px';ring.style.height='52px';});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px';});
+  });
+
+  /* ---- SCROLL ANIMATIONS ---- */
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>{
+    el.style.transform='translateY(20px)';
+    el.style.transition='opacity .7s ease,transform .7s ease';
+    obs.observe(el);
+  });
+
+  /* ---- TASK ACCORDION ---- */
+  function toggleTask(card) {
+    const isOpen = card.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.task-role-card').forEach(c => c.classList.remove('open'));
+    // Open clicked if it wasn't open
+    if (!isOpen) card.classList.add('open');
+  }
+
+  /* ---- LANGUAGE TOGGLE ---- */
+  let currentLang = 'es';
+
+  function toggleLang() {
+    const body = document.body;
+    const btn = document.getElementById('langToggle');
+    const flag = document.getElementById('langFlag');
+    const label = document.getElementById('langLabel');
+
+    // Fade out
+    body.style.opacity = '0.6';
+    body.style.transition = 'opacity 0.2s';
+
+    setTimeout(() => {
+      if (currentLang === 'es') {
+        currentLang = 'en';
+        document.documentElement.lang = 'en';
+        flag.textContent = 'EN';
+        label.textContent = 'ES';
+        document.title = 'CV Store — Jonathan Rodríguez';
+      } else {
+        currentLang = 'es';
+        document.documentElement.lang = 'es';
+        flag.textContent = 'ES';
+        label.textContent = 'EN';
+        document.title = 'CV Store — Jonathan Rodríguez';
+      }
+
+      // Show/hide elements
+      document.querySelectorAll('[data-es]').forEach(el => {
+        el.style.display = currentLang === 'es' ? '' : 'none';
+      });
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.style.display = currentLang === 'en' ? '' : 'none';
+      });
+
+      // Fade in
+      body.style.opacity = '1';
+    }, 200);
+  }
+</script>
+</body>
+</html>
