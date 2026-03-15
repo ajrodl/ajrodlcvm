@@ -149,14 +149,16 @@
   /* PROJECTS */
   .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
   .proj-card{background:var(--card);cursor:none;overflow:hidden;}
-  .proj-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;transition:transform .4s;}
-  .proj-card:hover .proj-thumb{transform:scale(1.05);}
-  .t1{background:linear-gradient(135deg,#042C53,#0C447C);}
-  .t2{background:linear-gradient(135deg,#0C3B1A,#1a6b36);}
-  .t3{background:linear-gradient(135deg,#1a0e2d,#3d1a6b);}
-  .t4{background:linear-gradient(135deg,#1a1208,#3d2b0e);}
-  .t5{background:linear-gradient(135deg,#1a1f2d,#2d3a5c);}
-  .t6{background:linear-gradient(135deg,#1a2d1a,#2d5c2d);}
+  .proj-thumb{
+    height:160px;display:flex;align-items:center;justify-content:center;
+    background:#ffffff;
+    border-bottom:1px solid var(--border);
+    padding:28px 44px;
+    transition:background .3s;
+  }
+  .proj-card:hover .proj-thumb{background:#f0f6fd;}
+  .proj-thumb img{width:100%;max-height:80px;object-fit:contain;display:block;}
+  .t1,.t2,.t3,.t4,.t5,.t6{}
   .proj-info{padding:24px;}
   .proj-tag{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
   .proj-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
@@ -172,13 +174,16 @@
   .sector-name{font-size:0.76rem;font-weight:500;color:var(--ink);line-height:1.3;}
 
   /* CERTS */
-  .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
-  .cert-card{background:var(--card);padding:32px 28px;cursor:none;transition:background .2s;}
-  .cert-card:hover{background:white;}
-  .cert-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
-  .cert-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3;}
-  .cert-issuer{font-size:0.78rem;color:var(--accent);font-weight:500;margin-bottom:4px;}
-  .cert-year{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;color:var(--warm);}
+.cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.cert-card{background:var(--card);padding:28px;cursor:none;transition:background .2s;display:flex;flex-direction:column;}
+.cert-card:hover{background:white;}
+.cert-icon{font-size:1.8rem;margin-bottom:16px;min-height:72px;display:flex;align-items:center;}
+.cert-icon img{width:92px;height:92px;object-fit:contain;display:block;}
+.cert-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3;}
+.cert-name a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:border-color .2s;display:inline;}
+.cert-name a:hover{border-color:var(--accent);}
+.cert-issuer{font-size:0.78rem;color:var(--accent);font-weight:500;margin-bottom:4px;}
+.cert-year{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;color:var(--warm);}
 
   /* EDU */
   .edu-card{background:var(--card);border:1px solid var(--border);padding:36px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;}
@@ -247,9 +252,7 @@
       <span class="lang-flag" id="langFlag">ES</span>
       <span id="langLabel">EN</span>
     </button>
-    <a href="#contacto" class="cart-btn">
-      <span data-es>Contactar →</span><span data-en style="display:none">Contact me →</span>
-    </a>
+    
   </div>
 </header>
 
@@ -593,7 +596,7 @@
   </div>
   <div class="proj-grid">
     <div class="proj-card">
-      <div class="proj-thumb t1">✈️</div>
+      <div class="proj-thumb t1"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Airbus_Logo_2017.svg" alt="Airbus"></div>
       <div class="proj-info">
         <div class="proj-tag">EMEA · <span data-es>Aeroespacial</span><span data-en style="display:none">Aerospace</span></div>
         <div class="proj-title">Airbus</div>
@@ -602,7 +605,7 @@
       </div>
     </div>
     <div class="proj-card">
-      <div class="proj-thumb t2">💊</div>
+      <div class="proj-thumb t2"><img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Novartis-Logo.svg" alt="Novartis"></div>
       <div class="proj-info">
         <div class="proj-tag">EMEA · <span data-es>Farmacéutica</span><span data-en style="display:none">Pharma</span></div>
         <div class="proj-title">Novartis</div>
@@ -611,7 +614,7 @@
       </div>
     </div>
     <div class="proj-card">
-      <div class="proj-thumb t3">👗</div>
+      <div class="proj-thumb t3"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Carolina_Herrera_logo.svg" alt="Carolina Herrera"></div>
       <div class="proj-info">
         <div class="proj-tag">EMEA · <span data-es>Moda & Lujo</span><span data-en style="display:none">Fashion & Luxury</span></div>
         <div class="proj-title">Carolina Herrera</div>
@@ -620,7 +623,7 @@
       </div>
     </div>
     <div class="proj-card">
-      <div class="proj-thumb t4">🏗️</div>
+      <div class="proj-thumb t4"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Cemex_Logo.svg" alt="Cemex"></div>
       <div class="proj-info">
         <div class="proj-tag"><span data-es>América · Construcción</span><span data-en style="display:none">Americas · Construction</span></div>
         <div class="proj-title">CEMEX (4 <span data-es>plataformas</span><span data-en style="display:none">platforms</span>)</div>
@@ -629,7 +632,7 @@
       </div>
     </div>
     <div class="proj-card">
-      <div class="proj-thumb t5">📦</div>
+      <div class="proj-thumb t5"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Office_Depot_Logo_%28Horizontal%29.svg" alt="Office Depot"></div>
       <div class="proj-info">
         <div class="proj-tag"><span data-es>América · Retail</span><span data-en style="display:none">Americas · Retail</span></div>
         <div class="proj-title">Office Depot México</div>
@@ -638,7 +641,7 @@
       </div>
     </div>
     <div class="proj-card">
-      <div class="proj-thumb t6">📡</div>
+      <div class="proj-thumb t6"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Logo_de_Am%C3%A9rica_M%C3%B3vil.svg" alt="America Movil"></div>
       <div class="proj-info">
         <div class="proj-tag"><span data-es>América · Telecomunicaciones</span><span data-en style="display:none">Americas · Telecom</span></div>
         <div class="proj-title">América Móvil</div>
@@ -676,28 +679,34 @@
     <span class="sec-count"><span data-es>4 certificados vigentes</span><span data-en style="display:none">4 active certifications</span></span>
   </div>
   <div class="cert-grid">
+	<div class="cert-card">
+	<div class="cert-icon"><img src="https://images.credly.com/size/220x220/images/fcc89b87-8169-4a0d-bae5-05df994cd176/blob"></div>
+	<div class="cert-name"><a href="https://www.credly.com/badges/eb9af148-c033-4dac-adfe-a3818ad8ae1a/public_url" target="_blank">SAP Certified Professional - Business User - SAP Commerce Cloud</a></div>
+	<div class="cert-issuer">SAP</div>
+	<div class="cert-year"><span data-es>Desde 2022, Actualizada 2026</span><span data-en style="display:none">From 2022, 2026 Stay Current</span></div>
+	</div>
     <div class="cert-card">
-      <span class="cert-icon">🏅</span>
-      <div class="cert-name">SAP Certified Associate — Business User</div>
+      <div class="cert-icon"><img src="https://images.credly.com/images/27ec3804-027b-4f5d-ad73-5e495eb2729f/blob"></div>
+      <div class="cert-name"><a href="https://www.credly.com/badges/006a5363-d8e5-4ab8-ae19-49a0bfd99f2d/public_url" target="_blank">SAP Certified Professional — Developer — SAP Commerce Cloud</a></div>
       <div class="cert-issuer">SAP</div>
-      <div class="cert-year">2026</div>
+      <div class="cert-year"><span data-es>Desde 2022, Actualizada 2026</span><span data-en style="display:none">From 2022, 2026 Stay Current</span></div>
+    </div>
+	<div class="cert-card">
+      <div class="cert-icon"><img src="https://images.credly.com/size/160x160/images/8b546a54-b9d3-4ad8-bb8a-89cccaef3141/E_C4HYCP1811.png"></div>
+      <div class="cert-name"><a href="https://www.credly.com/badges/fe9a3854-9535-4ba0-b3ef-75b01824440a/public_url" target="_blank">SAP Certified Product Support Specialist - SAP Commerce</a></div>
+      <div class="cert-issuer">SAP</div>
+      <div class="cert-year"><span data-es>Desde 2021, Descontinuada por SAP 2025</span><span data-en style="display:none">From 2021, 2025 Discontinued by SAP</span></div>
     </div>
     <div class="cert-card">
-      <span class="cert-icon">⚙️</span>
-      <div class="cert-name">SAP Certified Professional — Developer — SAP Commerce Cloud</div>
-      <div class="cert-issuer">SAP</div>
-      <div class="cert-year">2026</div>
-    </div>
-    <div class="cert-card">
-      <span class="cert-icon">🔄</span>
-      <div class="cert-name">Scrum Foundation Professional Certification — SFPC</div>
+      <div class="cert-icon"><img src="https://images.credly.com/size/220x220/images/b1bc1abc-c04c-4b80-b3b8-eb13f521eb60/blob"></div>
+      <div class="cert-name"><a href="https://www.credly.com/badges/fb985469-5037-41d4-8c23-cca36eb67850/public_url" target="_blank">Scrum Foundation Professional Certification — SFPC</a></div>
       <div class="cert-issuer">CertiProf</div>
       <div class="cert-year">2025</div>
     </div>
     <div class="cert-card">
-      <span class="cert-icon">🤖</span>
-      <div class="cert-name">Generative AI Leader</div>
-      <div class="cert-issuer">Google</div>
+      <div class="cert-icon"><img src="https://img-c.udemycdn.com/open-badges/v2/badge-class/2028805321/36cb3e14-63a7-465d-a461-114a601b8c9d11937474151916786224.png"></div>
+      <div class="cert-name"><a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/5K6LDJAIZRUX" target="_blank">Generative AI Leader</a></div>
+      <div class="cert-issuer">Google - Coursera</div>
       <div class="cert-year">2026</div>
     </div>
   </div>
@@ -732,7 +741,7 @@
         <span data-en style="display:none">Available for remote, hybrid, or relocation positions. Specialist in enterprise eCommerce projects and custom software solutions at a global level.</span>
       </p>
       <a class="btn-primary" style="text-decoration:none;">
-        <span data-es>Enviar mensaje →</span><span data-en style="display:none">Send message →</span>
+        <span data-es>Contactar →</span><span data-en style="display:none">Contact →</span>
       </a>
     </div>
      
