@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="91a0cfc0-487f-4da9-a6a9-8e256be25769"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -19,17 +20,83 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink)}
 
-header{
-  position:sticky;top:0;z-index:10;
-  backdrop-filter:blur(10px);
-  background:rgba(247,250,255,.85);
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 40px;border-bottom:1px solid rgba(0,0,0,.05)
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100; /* Aumentado para asegurar que esté sobre el mapa */
+  backdrop-filter: blur(10px);
+  background: rgba(247,250,255,.85);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  border-bottom: 1px solid rgba(0,0,0,.05);
 }
-.store-name{font-family:'Playfair Display';font-weight:700}
-nav{display:flex;gap:24px;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
-nav a{text-decoration:none;color:var(--muted)}
-nav a:hover{color:var(--accent)}
+
+.store-name {
+  font-family: 'Playfair Display';
+  font-weight: 700;
+  white-space: nowrap; /* Evita que el nombre se rompa en dos líneas */
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+  font-size: .75rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+
+@media (max-width: 850px) {
+  header {
+    flex-direction: column; /* Apila nombre y menú */
+    padding: 15px 20px;
+    gap: 15px;
+  }
+
+  .store-name {
+    font-size: 0.9rem; /* Un poco más pequeño en móvil */
+  }
+
+  nav {
+    gap: 12px; /* Reduce espacio entre links */
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap; /* Si no caben, bajan a la siguiente línea de forma ordenada */
+  }
+  
+  nav a {
+    font-size: 0.65rem; /* Ajuste fino de lectura */
+    padding: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Para móviles muy pequeños, permitimos un scroll horizontal suave en el menú */
+  nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 5px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Esconde scrollbar en Firefox */
+  }
+  
+  nav::-webkit-scrollbar {
+    display: none; /* Esconde scrollbar en Chrome/Safari */
+  }
+}
 
 .hero{padding:120px 40px 80px;max-width:1100px;margin:auto}
 .hero-title {
@@ -380,6 +447,10 @@ footer{padding:60px 40px;text-align:center;font-size:.7rem;color:var(--muted)}
       <h3>Models</h3>
       <p>B2B, B2C, B2B2C, C2C, C2B, D2C, Marketplace</p>
     </div>
+	<div class="card">
+      <h3>Integrations</h3>
+      <p>Definition and Modeling: Core, API's, Adaptors </p>
+    </div>
     <div class="card">
       <h3>Upgrades</h3>
       <p>On-Premise to Cloud, Cloud to Cloud, Revamp, Replatforming</p>
@@ -515,23 +586,29 @@ footer{padding:60px 40px;text-align:center;font-size:.7rem;color:var(--muted)}
   <div class="cert-grid">
     <div class="cert-card">
       <img src="https://images.credly.com/size/220x220/images/fcc89b87-8169-4a0d-bae5-05df994cd176/blob" alt="SAP Commerce Cloud Business User" class="cert-img">
-      <div class="cert-title">SAP Commerce Cloud Business User</div>
+      <div class="cert-title">SAP Commerce Cloud - Business User</div>
+	  <span class="exp-desc">2021-2027</span>
+	  
     </div>
     <div class="cert-card">
       <img src="https://images.credly.com/images/27ec3804-027b-4f5d-ad73-5e495eb2729f/blob" alt="Developer — SAP Commerce Cloud" class="cert-img">
-      <div class="cert-title">SAP Certified Professional — Developer — SAP Commerce Cloud</div>
+      <div class="cert-title">SAP Commerce Cloud - Developer</div>
+	  <span class="exp-desc">2021-2027</span>
     </div>
     <div class="cert-card">
       <img src="https://images.credly.com/size/160x160/images/8b546a54-b9d3-4ad8-bb8a-89cccaef3141/E_C4HYCP1811.png" alt="SAP Certified Product Support Specialist" class="cert-img">
-      <div class="cert-title">SAP Certified Product Support Specialist - SAP Commerce</div>
+      <div class="cert-title">SAP Commerce Cloud - Product Support Specialist</div>
+	  <span class="exp-desc">2021-2025 <br>(SAP Discontinued)</span>
     </div>
     <div class="cert-card">
       <img src="https://img-c.udemycdn.com/open-badges/v2/badge-class/2028805321/36cb3e14-63a7-465d-a461-114a601b8c9d11937474151916786224.png" alt="Generative AI Leader" class="cert-img">
-      <div class="cert-title">Generative AI Leader</div>
+      <div class="cert-title">Google - Generative AI Leader</div>
+	  <span class="exp-desc">2026</span>
     </div>
     <div class="cert-card">
       <img src="https://images.credly.com/size/220x220/images/b1bc1abc-c04c-4b80-b3b8-eb13f521eb60/blob" alt="Scrum" class="cert-img">
       <div class="cert-title">Scrum Foundation Professional Certification — SFPC</div>
+	  <span class="exp-desc">2021-2028</span>
     </div>
   </div>
 </section>
